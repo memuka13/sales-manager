@@ -1,8 +1,12 @@
+import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-root',
+  standalone: true,
+  imports: [CommonModule, TranslateModule, HttpClientModule],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
