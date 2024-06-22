@@ -23,6 +23,7 @@
     "@ngrx/store": "^15.4.0",
     "@ngx-translate/core": "14.0",
     "@ngx-translate/http-loader": "7.0",
+    "date-fns": "^3.6.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.12.0"
