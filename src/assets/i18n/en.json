@@ -6,5 +6,9 @@
   "Language": "Language",
   "Products": "Products",
   "Sales Manager": "Sales Manager",
-  "Home": "Home"
+  "Home": "Home",
+  "Title": "Title",
+  "Price": "Price",
+  "Quantity": "Quantity",
+  "Filter": "Filter"
 }
