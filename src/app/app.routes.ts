@@ -4,10 +4,15 @@ export const appRoutes: Route[] = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'home',
+    redirectTo: 'log-in',
   },
   {
-    path: 'home',
-    loadComponent: () => import('./app.component').then((m) => m.AppComponent),
+    path: 'log-in',
+    loadComponent: () =>
+      import('./pages/log-in/log-in.component').then((m) => m.LogInComponent),
+  },
+  {
+    path: '**',
+    redirectTo: 'log-in',
   },
 ];

@@ -1,22 +1,13 @@
-<nav class="navbar navbar-dark bg-dark">
-  <div class="container">
-    <a class="navbar-brand">
-      {{ "name" | translate }}
-    </a>
-    <span class="form-inline">
-      <select
-        class="form-control"
-        #selectedLang
-        (change)="switchLang(selectedLang.value)"
-      >
-        <option
-          *ngFor="let language of translate.getLangs()"
-          [value]="language"
-          [selected]="language === translate.currentLang"
-        >
-          {{ language }}
-        </option>
-      </select>
-    </span>
-  </div>
-</nav>
+<header class="h-12">
+  <button mat-icon-button (click)="drawer.toggle()">
+    <mat-icon fontIcon="menu"></mat-icon>
+  </button>
+</header>
+<mat-drawer-container hasBackdrop="false">
+  <mat-drawer class="rounded-e-md" #drawer mode="push" position="start">
+    <app-side-nav></app-side-nav>
+  </mat-drawer>
+  <mat-drawer-content>
+    <router-outlet></router-outlet>
+  </mat-drawer-content>
+</mat-drawer-container>
