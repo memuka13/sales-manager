@@ -1,13 +1,16 @@
 <div class="size-full flex flex-col items-center justify-center gap-4">
   <p class="text-xl">{{ "Log in" | translate }}</p>
-  <div class="flex flex-col">
+  <form [formGroup]="form" class="flex flex-col">
     <mat-form-field appearance="outline">
       <mat-label>{{ "Username" | translate }}</mat-label>
-      <input matInput />
+      <input formControlName="username" matInput />
     </mat-form-field>
     <mat-form-field appearance="outline">
       <mat-label>{{ "Password" | translate }}</mat-label>
-      <input matInput />
+      <input formControlName="password" matInput />
     </mat-form-field>
-  </div>
+    <button mat-raised-button [disabled]="form.invalid">
+      {{ "Log in" | translate }}
+    </button>
+  </form>
 </div>
