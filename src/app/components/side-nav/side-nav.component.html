@@ -12,8 +12,13 @@
       {{ language }}
     </option>
   </select>
-  <button class="w-full" mat-raised-button>{{ "Products" | translate }}</button>
-  <button mat-raised-button class="w-full">
+  <button mat-raised-button class="w-full" routerLink="./log-in">
+    {{ "Home" | translate }}
+  </button>
+  <button mat-raised-button class="w-full" routerLink="./products">
+    {{ "Products" | translate }}
+  </button>
+  <button mat-raised-button class="w-full" routerLink="./sales-managers">
     {{ "Sales Manager" | translate }}
   </button>
 </nav>
