@@ -1,5 +1,6 @@
 {
-  "name": "name",
+  "Name": "Name",
+  "Surname": "Surname",
   "Log in": "Log in",
   "Username": "Username",
   "Password": "Password",
@@ -10,5 +11,12 @@
   "Title": "Title",
   "Price": "Price",
   "Quantity": "Quantity",
-  "Filter": "Filter"
+  "Filter": "Filter",
+  "Date Registered": "Date Registered",
+  "Total Sales": "Total Sales",
+  "Sales Date": "Sales Date",
+  "From - To": "From - To",
+  "Cancel": "Cancel",
+  "From": "From",
+  "To": "To"
 }

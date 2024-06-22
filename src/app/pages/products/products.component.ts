@@ -1,13 +1,23 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  Inject,
+  OnInit,
+  Optional,
+  ViewChild,
+  inject,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { ELEMENT_DATA, Product } from './products.data';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { TranslateModule } from '@ngx-translate/core';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { PRODUCTS_DATA, PRODUCTS_SOLD_BY_JDOE1 } from 'src/app/data';
+import { Manager, Product } from 'src/app/models';
 
 @Component({
   selector: 'app-products',
@@ -25,7 +35,15 @@ import { TranslateModule } from '@ngx-translate/core';
 })
 export class ProductsComponent implements OnInit, AfterViewInit {
   readonly displayedColumns: string[] = ['title', 'price', 'quantity'];
-  readonly dataSource = new MatTableDataSource<Product>(ELEMENT_DATA);
+  readonly dataSource = new MatTableDataSource<Product>(PRODUCTS_DATA);
+  constructor(
+    @Optional() @Inject(MAT_DIALOG_DATA) public managerData: Manager,
+  ) {
+    if (managerData) {
+      this.displayedColumns = ['title', 'price', 'quantity', 'salesDate'];
+      this.dataSource = new MatTableDataSource<Product>(PRODUCTS_SOLD_BY_JDOE1);
+    }
+  }
 
   @ViewChild(MatPaginator) paginator?: MatPaginator;
 
