@@ -4,10 +4,29 @@ export const appRoutes: Route[] = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'home',
+    redirectTo: 'log-in',
   },
   {
-    path: 'home',
-    loadComponent: () => import('./app.component').then((m) => m.AppComponent),
+    path: 'log-in',
+    loadComponent: () =>
+      import('./pages/log-in/log-in.component').then((m) => m.LogInComponent),
+  },
+  {
+    path: 'products',
+    loadComponent: () =>
+      import('./pages/products/products.component').then(
+        (m) => m.ProductsComponent,
+      ),
+  },
+  {
+    path: 'sales-managers',
+    loadComponent: () =>
+      import('./pages/sales-managers/sales-managers.component').then(
+        (m) => m.SalesManagersComponent,
+      ),
+  },
+  {
+    path: '**',
+    redirectTo: 'log-in',
   },
 ];

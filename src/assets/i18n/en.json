@@ -1,3 +1,10 @@
 {
-  "name": "name"
+  "name": "name",
+  "Log in": "Log in",
+  "Username": "Username",
+  "Password": "Password",
+  "Language": "Language",
+  "Products": "Products",
+  "Sales Manager": "Sales Manager",
+  "Home": "Home"
 }
