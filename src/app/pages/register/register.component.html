@@ -1,1 +1,38 @@
-<p>register works!</p>
+<div class="size-full flex flex-col items-center justify-center gap-4">
+  <p class="text-xl">{{ "Register" | translate }}</p>
+  <form (ngSubmit)="submit()" [formGroup]="form" class="flex flex-col">
+    <mat-form-field appearance="outline">
+      <mat-label>{{ "Username" | translate }}</mat-label>
+      <input formControlName="username" matInput />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>{{ "Name" | translate }}</mat-label>
+      <input formControlName="name" matInput />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>{{ "Surname" | translate }}</mat-label>
+      <input formControlName="surname" matInput />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>{{ "Password" | translate }}</mat-label>
+      <input formControlName="password" matInput />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>{{ "Confirm Password" | translate }}</mat-label>
+      <input formControlName="confirmPassword" matInput />
+    </mat-form-field>
+
+    <div class="flex flex-col gap-3">
+      <button mat-raised-button color="primary" [disabled]="form.invalid">
+        {{ "Register" | translate }}
+      </button>
+      <button type="button" mat-raised-button routerLink="./log-in">
+        {{ "Log in" | translate }}
+      </button>
+    </div>
+  </form>
+</div>
