@@ -10,6 +10,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-log-in',
@@ -21,6 +22,7 @@ import { MatButtonModule } from '@angular/material/button';
     MatButtonModule,
     TranslateModule,
     ReactiveFormsModule,
+    RouterModule,
   ],
   templateUrl: './log-in.component.html',
   styleUrls: ['./log-in.component.scss'],
@@ -30,4 +32,8 @@ export class LogInComponent {
     username: new FormControl('', Validators.required),
     password: new FormControl('', Validators.required),
   });
+
+  submit() {
+    console.log('Form was submitted');
+  }
 }

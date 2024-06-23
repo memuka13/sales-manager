@@ -1,6 +1,6 @@
 <div class="size-full flex flex-col items-center justify-center gap-4">
   <p class="text-xl">{{ "Log in" | translate }}</p>
-  <form [formGroup]="form" class="flex flex-col">
+  <form (ngSubmit)="submit()" [formGroup]="form" class="flex flex-col">
     <mat-form-field appearance="outline">
       <mat-label>{{ "Username" | translate }}</mat-label>
       <input formControlName="username" matInput />
@@ -9,8 +9,18 @@
       <mat-label>{{ "Password" | translate }}</mat-label>
       <input formControlName="password" matInput />
     </mat-form-field>
-    <button mat-raised-button [disabled]="form.invalid">
-      {{ "Log in" | translate }}
-    </button>
+    <div class="flex flex-col gap-3">
+      <button
+        type="submit"
+        color="primary"
+        mat-raised-button
+        [disabled]="form.invalid"
+      >
+        {{ "Log in" | translate }}
+      </button>
+      <button type="button" mat-raised-button [routerLink]="['/register']">
+        {{ "Register" | translate }}
+      </button>
+    </div>
   </form>
 </div>
