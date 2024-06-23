@@ -22,6 +22,7 @@
       <mat-date-range-input
         [formGroup]="form.controls.dateRegisteredRange"
         [rangePicker]="picker"
+        [max]="maxDate"
       >
         <input matStartDate formControlName="start" />
         <input matEndDate formControlName="end" />
@@ -37,11 +38,11 @@
     <p class="text-lg">{{ "Total Sales" | translate }}</p>
     <mat-form-field appearance="outline" class="w-full">
       <mat-label>{{ "From" | translate }}</mat-label>
-      <input matInput formControlName="totalSalesFrom" #input [max]="maxDate" />
+      <input matInput formControlName="totalSalesFrom" #input />
     </mat-form-field>
     <mat-form-field appearance="outline" class="w-full">
       <mat-label>{{ "To" | translate }}</mat-label>
-      <input matInput formControlName="totalSalesTo" #input [max]="maxDate" />
+      <input matInput formControlName="totalSalesTo" #input />
     </mat-form-field>
   </div>
 
