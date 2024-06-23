@@ -1,8 +1,8 @@
-<mat-form-field appearance="outline" class="w-full">
-  <mat-label>{{ "Filter" | translate }}</mat-label>
-  <input matInput (keyup)="applyFilter($event)" #input />
-</mat-form-field>
-<div class="mat-elevation-z8">
+<div class="p-4">
+  <mat-form-field appearance="outline" class="w-full">
+    <mat-label>{{ "Filter" | translate }}</mat-label>
+    <input matInput (keyup)="applyFilter($event)" #input />
+  </mat-form-field>
   <table mat-table [dataSource]="dataSource">
     <ng-container matColumnDef="title">
       <th mat-header-cell *matHeaderCellDef>{{ "Title" | translate }}</th>
@@ -17,6 +17,13 @@
     <ng-container matColumnDef="quantity">
       <th mat-header-cell *matHeaderCellDef>{{ "Quantity" | translate }}</th>
       <td mat-cell *matCellDef="let element">{{ element.quantity }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="salesDate">
+      <th mat-header-cell *matHeaderCellDef>{{ "Sales Date" | translate }}</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.salesDate | date: "dd/MM/yyyy HH:mm" }}
+      </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

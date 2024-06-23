@@ -1,10 +1,6 @@
-export interface Product {
-  title: string;
-  price: string;
-  quantity: number;
-}
+import { Manager, Product, ProductSold } from './models';
 
-export const ELEMENT_DATA: Product[] = [
+export const PRODUCTS_DATA: Product[] = [
   { title: 'Apple iPhone 14', price: '$799.99', quantity: 5 },
   { title: 'Samsung Galaxy S21', price: '$699.99', quantity: 3 },
   { title: 'Google Pixel 6', price: '$599.99', quantity: 8 },
@@ -105,4 +101,140 @@ export const ELEMENT_DATA: Product[] = [
   { title: 'Canon PowerShot G7 X Mark III', price: '$749.99', quantity: 5 },
   { title: 'DJI Osmo Mobile 4', price: '$149.99', quantity: 12 },
   { title: 'Razer Kraken X Gaming Headset', price: '$49.99', quantity: 20 },
+];
+
+export const MANAGERS_DATA: Manager[] = [
+  {
+    username: 'jdoe1',
+    name: 'John',
+    surname: 'Doe',
+    dateRegistered: '2020-01-15T00:00:00.000Z',
+    totalSales: '$15000',
+  },
+  {
+    username: 'asmith2',
+    name: 'Alice',
+    surname: 'Smith',
+    dateRegistered: '2019-03-10T00:00:00.000Z',
+    totalSales: '$22000',
+  },
+  {
+    username: 'bwilliams3',
+    name: 'Bob',
+    surname: 'Williams',
+    dateRegistered: '2018-07-21T00:00:00.000Z',
+    totalSales: '$18500',
+  },
+  {
+    username: 'cjones4',
+    name: 'Catherine',
+    surname: 'Jones',
+    dateRegistered: '2021-11-05T00:00:00.000Z',
+    totalSales: '$12000',
+  },
+  {
+    username: 'dmiller5',
+    name: 'David',
+    surname: 'Miller',
+    dateRegistered: '2022-04-12T00:00:00.000Z',
+    totalSales: '$9500',
+  },
+  {
+    username: 'emartinez6',
+    name: 'Emily',
+    surname: 'Martinez',
+    dateRegistered: '2017-08-30T00:00:00.000Z',
+    totalSales: '$30000',
+  },
+  {
+    username: 'fgarcia7',
+    name: 'Frank',
+    surname: 'Garcia',
+    dateRegistered: '2019-12-25T00:00:00.000Z',
+    totalSales: '$17000',
+  },
+  {
+    username: 'hlee8',
+    name: 'Helen',
+    surname: 'Lee',
+    dateRegistered: '2020-09-14T00:00:00.000Z',
+    totalSales: '$20000',
+  },
+  {
+    username: 'ikevans9',
+    name: 'Isaac',
+    surname: 'Evans',
+    dateRegistered: '2016-02-18T00:00:00.000Z',
+    totalSales: '$35000',
+  },
+  {
+    username: 'jwilliams10',
+    name: 'Jessica',
+    surname: 'Williams',
+    dateRegistered: '2021-06-27T00:00:00.000Z',
+    totalSales: '$11000',
+  },
+];
+
+export const PRODUCTS_SOLD_BY_JDOE1: ProductSold[] = [
+  {
+    title: 'Apple iPhone 14',
+    price: '$799.99',
+    quantity: 2,
+    salesDate: '2023-01-10T00:00:00.000Z',
+  },
+  {
+    title: 'Samsung Galaxy S21',
+    price: '$699.99',
+    quantity: 1,
+    salesDate: '2023-01-12T00:00:00.000Z',
+  },
+  {
+    title: 'Google Pixel 6',
+    price: '$599.99',
+    quantity: 3,
+    salesDate: '2023-01-15T00:00:00.000Z',
+  },
+  {
+    title: 'Sony WH-1000XM4 Headphones',
+    price: '$349.99',
+    quantity: 2,
+    salesDate: '2023-01-20T00:00:00.000Z',
+  },
+  {
+    title: 'Dell XPS 13 Laptop',
+    price: '$999.99',
+    quantity: 1,
+    salesDate: '2023-01-25T00:00:00.000Z',
+  },
+  {
+    title: 'Apple MacBook Air',
+    price: '$899.99',
+    quantity: 1,
+    salesDate: '2023-02-01T00:00:00.000Z',
+  },
+  {
+    title: 'Bose QuietComfort 35 II',
+    price: '$299.99',
+    quantity: 2,
+    salesDate: '2023-02-05T00:00:00.000Z',
+  },
+  {
+    title: 'Amazon Echo Dot',
+    price: '$49.99',
+    quantity: 5,
+    salesDate: '2023-02-10T00:00:00.000Z',
+  },
+  {
+    title: 'Nikon D3500 DSLR Camera',
+    price: '$499.99',
+    quantity: 1,
+    salesDate: '2023-02-15T00:00:00.000Z',
+  },
+  {
+    title: 'GoPro HERO9 Black',
+    price: '$399.99',
+    quantity: 2,
+    salesDate: '2023-02-20T00:00:00.000Z',
+  },
 ];

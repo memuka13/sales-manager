@@ -8,6 +8,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { importProvidersFrom } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { appRoutes } from './app/app.routes';
+import { MatNativeDateModule } from '@angular/material/core';
 
 export function httpTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -27,7 +28,8 @@ bootstrapApplication(AppComponent, {
           deps: [HttpClient],
         },
       }),
-      StoreModule.forRoot({}, {})
+      StoreModule.forRoot({}, {}),
+      MatNativeDateModule,
     ),
   ],
 }).catch((err) => console.error(err));
