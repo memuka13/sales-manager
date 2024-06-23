@@ -4,6 +4,7 @@ import {
   Inject,
   OnInit,
   Optional,
+  TemplateRef,
   ViewChild,
   inject,
 } from '@angular/core';
@@ -15,9 +16,19 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { TranslateModule } from '@ngx-translate/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {
+  MAT_DIALOG_DATA,
+  MatDialog,
+  MatDialogModule,
+} from '@angular/material/dialog';
 import { PRODUCTS_DATA, PRODUCTS_SOLD_BY_JDOE1 } from 'src/app/data';
-import { Manager, Product } from 'src/app/models';
+import { Manager, Product, ProductForm } from 'src/app/models';
+import { MatButtonModule } from '@angular/material/button';
+import { AddManageProductComponent } from 'src/app/components/add-manage-product/add-manage-product.component';
+import { FormGroup } from '@angular/forms';
+import { take } from 'rxjs';
+import { MatIconModule } from '@angular/material/icon';
+import { SellDialogComponent } from 'src/app/components/sell-dialog/sell-dialog.component';
 
 @Component({
   selector: 'app-products',
@@ -29,15 +40,25 @@ import { Manager, Product } from 'src/app/models';
     MatFormFieldModule,
     MatInputModule,
     TranslateModule,
+    MatButtonModule,
+    MatDialogModule,
+    MatIconModule,
+    MatDialogModule,
   ],
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.scss'],
 })
 export class ProductsComponent implements OnInit, AfterViewInit {
-  readonly displayedColumns: string[] = ['title', 'price', 'quantity'];
+  private readonly dialog = inject(MatDialog);
+  readonly displayedColumns: string[] = [
+    'title',
+    'price',
+    'quantity',
+    'action',
+  ];
   readonly dataSource = new MatTableDataSource<Product>(PRODUCTS_DATA);
   constructor(
-    @Optional() @Inject(MAT_DIALOG_DATA) public managerData: Manager,
+    @Optional() @Inject(MAT_DIALOG_DATA) public managerData: Manager
   ) {
     if (managerData) {
       this.displayedColumns = ['title', 'price', 'quantity', 'salesDate'];
@@ -46,6 +67,7 @@ export class ProductsComponent implements OnInit, AfterViewInit {
   }
 
   @ViewChild(MatPaginator) paginator?: MatPaginator;
+  @ViewChild('deleteDialog') deleteDialog?: TemplateRef<unknown>;
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -69,7 +91,40 @@ export class ProductsComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     if (this.paginator) this.dataSource.paginator = this.paginator;
   }
-  openDialog(row: Product) {
-    console.log(row);
+  openAddOrEditDialog(row?: Product) {
+    const dialogRef = this.dialog.open(AddManageProductComponent, {
+      data: row,
+    });
+
+    dialogRef
+      .afterClosed()
+      .pipe(take(1))
+      .subscribe((result: FormGroup<ProductForm>) => {
+        if (result) {
+          console.log(result);
+        }
+      });
+  }
+
+  delete(row: Product) {
+    const dialogRef = this.dialog.open(this.deleteDialog!);
+    dialogRef
+      .afterClosed()
+      .pipe(take(1))
+      .subscribe((result: boolean) => {
+        console.log(result);
+      });
+  }
+
+  sell(row: Product) {
+    const dialogRef = this.dialog.open(SellDialogComponent, {
+      data: row.quantity,
+    });
+    dialogRef
+      .afterClosed()
+      .pipe(take(1))
+      .subscribe((result: number) => {
+        console.log(result);
+      });
   }
 }

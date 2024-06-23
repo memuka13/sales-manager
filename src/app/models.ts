@@ -1,5 +1,10 @@
 import { FormControl, FormGroup } from '@angular/forms';
 
+export interface ProductForm {
+  title: FormControl<string | null>;
+  price: FormControl<string | null>;
+  quantity: FormControl<number | null>;
+}
 export interface Product {
   title: string;
   price: string;

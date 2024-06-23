@@ -4,6 +4,7 @@
   "Log in": "Log in",
   "Username": "Username",
   "Password": "Password",
+  "Confirm Password": "Confirm Password",
   "Language": "Language",
   "Products": "Products",
   "Sales Manager": "Sales Manager",
@@ -19,5 +20,8 @@
   "Cancel": "Cancel",
   "From": "From",
   "To": "To",
-  "Register": "Register"
+  "Register": "Register",
+  "Add": "Add",
+  "Confirm": "Confirm",
+  "Action": "Action"
 }

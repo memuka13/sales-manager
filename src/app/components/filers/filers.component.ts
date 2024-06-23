@@ -1,11 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  FormControl,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { TranslateModule } from '@ngx-translate/core';
@@ -32,5 +27,5 @@ import { MatButtonModule } from '@angular/material/button';
 })
 export class FilersComponent {
   readonly maxDate = new Date();
-  readonly form: FormGroup<ManagerFiltersForm> = inject(MAT_DIALOG_DATA)
+  readonly form: FormGroup<ManagerFiltersForm> = inject(MAT_DIALOG_DATA);
 }

@@ -1,11 +1,9 @@
 import { Component, ViewChild, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { TranslateModule } from '@ngx-translate/core';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MANAGERS_DATA } from 'src/app/data';
 import { Manager, ManagerFiltersForm } from 'src/app/models';
 import { MatDialog } from '@angular/material/dialog';
@@ -14,7 +12,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { FilersComponent } from 'src/app/components/filers/filers.component';
 import { take } from 'rxjs';
-import { formatISO, isAfter, isBefore, isValid, isWithinInterval, parseISO } from 'date-fns';
+import { formatISO } from 'date-fns';
 import { getFilterPredicate } from './sales-managers.util';
 
 @Component({
@@ -59,8 +57,16 @@ export class SalesManagersComponent {
     const username = form.value.username?.toLowerCase();
     const name = form.value.name?.toLowerCase();
     const surname = form.value.surname?.toLowerCase();
-    const dateRegisteredRangeStart = form.value.dateRegisteredRange?.start ?   formatISO(new Date(form.value.dateRegisteredRange?.start), { representation: 'date' }) : '';
-    const dateRegisteredRangeEnd = form.value.dateRegisteredRange?.end ? formatISO(new Date(form.value.dateRegisteredRange?.end), { representation: 'date' }) : '';
+    const dateRegisteredRangeStart = form.value.dateRegisteredRange?.start
+      ? formatISO(new Date(form.value.dateRegisteredRange?.start), {
+          representation: 'date',
+        })
+      : '';
+    const dateRegisteredRangeEnd = form.value.dateRegisteredRange?.end
+      ? formatISO(new Date(form.value.dateRegisteredRange?.end), {
+          representation: 'date',
+        })
+      : '';
     const totalSalesFrom = form.value.totalSalesFrom;
     const totalSalesTo = form.value.totalSalesTo;
 
@@ -88,7 +94,7 @@ export class SalesManagersComponent {
   ngAfterViewInit() {
     if (this.paginator) this.dataSource.paginator = this.paginator;
   }
-  
+
   openDialog(row: Manager) {
     const dialogRef = this.dialog.open(ProductsComponent, {
       data: row,
@@ -104,7 +110,7 @@ export class SalesManagersComponent {
 
   openFilter() {
     const dialogRef = this.dialog.open(FilersComponent, {
-      data: this.form
+      data: this.form,
     });
 
     dialogRef
@@ -112,8 +118,9 @@ export class SalesManagersComponent {
       .pipe(take(1))
       .subscribe((result: FormGroup<ManagerFiltersForm>) => {
         if (result) {
-          this.form = result
-          this.filter(result)};
+          this.form = result;
+          this.filter(result);
+        }
       });
   }
 }
