@@ -9,6 +9,10 @@ import { importProvidersFrom } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { appRoutes } from './app/app.routes';
 import { MatNativeDateModule } from '@angular/material/core';
+import { StateModule } from './store/state.module';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from './environment/environment';
 
 export function httpTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -29,7 +33,14 @@ bootstrapApplication(AppComponent, {
         },
       }),
       StoreModule.forRoot({}, {}),
+      EffectsModule.forRoot({}),
+      StoreDevtoolsModule.instrument({
+        name: 'Sales Manager',
+        maxAge: 25,
+        logOnly: environment.production,
+      }),
       MatNativeDateModule,
+      StateModule
     ),
   ],
 }).catch((err) => console.error(err));

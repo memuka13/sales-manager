@@ -23,5 +23,10 @@
   "Register": "Register",
   "Add": "Add",
   "Confirm": "Confirm",
-  "Action": "Action"
+  "Action": "Action",
+  "Items per page": "Items per page",
+  "Next page": "Next page",
+  "Previous page": "Previous page",
+  "First page": "First page",
+  "Last page": "Last page"
 }

@@ -16,12 +16,16 @@
 
     <ng-container matColumnDef="price">
       <th mat-header-cell *matHeaderCellDef>{{ "Price" | translate }}</th>
-      <td mat-cell *matCellDef="let element">{{ element.price }}</td>
+      <td mat-cell *matCellDef="let element">
+        {{ element.price | number : "0.1-2" }}
+      </td>
     </ng-container>
 
     <ng-container matColumnDef="quantity">
       <th mat-header-cell *matHeaderCellDef>{{ "Quantity" | translate }}</th>
-      <td mat-cell *matCellDef="let element">{{ element.quantity }}</td>
+      <td mat-cell *matCellDef="let element">
+        {{ element.quantity | number : "0.0" }}
+      </td>
     </ng-container>
 
     <ng-container matColumnDef="salesDate">
@@ -69,13 +73,15 @@
 </div>
 
 <ng-template #deleteDialog>
-  <h1>
-    {{ "Are you sure, you want to delete this product?" | translate }}
-  </h1>
-  <mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close>{{ "Cancel" | translate }}</button>
-    <button mat-button color="primary" [mat-dialog-close]="true">
-      {{ "Confirm" | translate }}
-    </button>
-  </mat-dialog-actions>
+  <div class="p-6">
+    <p class="text-wrap text-lg">
+      {{ "Are you sure, you want to delete this product?" | translate }}
+    </p>
+    <mat-dialog-actions align="end">
+      <button mat-button mat-dialog-close>{{ "Cancel" | translate }}</button>
+      <button mat-button color="primary" [mat-dialog-close]="true">
+        {{ "Confirm" | translate }}
+      </button>
+    </mat-dialog-actions>
+  </div>
 </ng-template>

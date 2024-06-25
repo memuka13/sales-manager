@@ -31,6 +31,7 @@ import { MatButtonModule } from '@angular/material/button';
 export class AddManageProductComponent {
   readonly product?: Product = inject(MAT_DIALOG_DATA);
   readonly form = new FormGroup<ProductForm>({
+    id: new FormControl(this.product?.id || null),
     title: new FormControl(this.product?.title || null, [
       Validators.required,
       Validators.pattern(
