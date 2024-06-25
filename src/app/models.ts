@@ -1,18 +1,21 @@
 import { FormControl, FormGroup } from '@angular/forms';
 
 export interface ProductForm {
+  id: FormControl<string | null>;
   title: FormControl<string | null>;
   price: FormControl<string | null>;
   quantity: FormControl<number | null>;
 }
 export interface Product {
+  id?: string;
   title: string;
   price: string;
   quantity: number;
 }
 
 export interface ProductSold extends Product {
-  salesDate: string;
+  salesDate?: string;
+  username?: string;
 }
 
 export interface ManagerFiltersForm {
@@ -30,6 +33,7 @@ interface DateRegisteredRange {
 }
 
 export interface Manager {
+  id?: string;
   username: string;
   name: string;
   surname: string;

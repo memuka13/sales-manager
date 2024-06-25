@@ -2,6 +2,7 @@ import {
   AfterViewInit,
   Component,
   Inject,
+  OnDestroy,
   OnInit,
   Optional,
   TemplateRef,
@@ -9,26 +10,45 @@ import {
   inject,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import {
   MAT_DIALOG_DATA,
   MatDialog,
   MatDialogModule,
 } from '@angular/material/dialog';
-import { PRODUCTS_DATA, PRODUCTS_SOLD_BY_JDOE1 } from 'src/app/data';
-import { Manager, Product, ProductForm } from 'src/app/models';
+import { Manager, Product, ProductSold } from 'src/app/models';
 import { MatButtonModule } from '@angular/material/button';
 import { AddManageProductComponent } from 'src/app/components/add-manage-product/add-manage-product.component';
-import { FormGroup } from '@angular/forms';
-import { take } from 'rxjs';
+import {
+  Subject,
+  filter,
+  switchMap,
+  take,
+  takeUntil,
+  takeWhile,
+  tap,
+} from 'rxjs';
 import { MatIconModule } from '@angular/material/icon';
 import { SellDialogComponent } from 'src/app/components/sell-dialog/sell-dialog.component';
+import { Store } from '@ngrx/store';
+import {
+  addProduct,
+  deleteProduct,
+  initProducts,
+  initProductsSold,
+  sellProduct,
+  updateProduct,
+} from 'src/store/products/products.action';
+import { ProductsFacade } from 'src/store/products/products.facade';
+import { selectManagers } from 'src/store/managers/managers.selector';
+import { updateManager } from 'src/store/managers/managers.action';
+import { ManagersFacade } from 'src/store/managers/managers.facade';
 
 @Component({
   selector: 'app-products',
@@ -48,26 +68,47 @@ import { SellDialogComponent } from 'src/app/components/sell-dialog/sell-dialog.
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.scss'],
 })
-export class ProductsComponent implements OnInit, AfterViewInit {
+export class ProductsComponent implements OnInit, AfterViewInit, OnDestroy {
   private readonly dialog = inject(MatDialog);
+  private readonly store = inject(Store);
+  private readonly productsFacade = inject(ProductsFacade);
+  private readonly managersFacade = inject(ManagersFacade);
+  private _matPaginatorIntl = inject(MatPaginatorIntl);
+  public translate = inject(TranslateService);
+  destroy$ = new Subject<null>();
   readonly displayedColumns: string[] = [
     'title',
     'price',
     'quantity',
     'action',
   ];
-  readonly dataSource = new MatTableDataSource<Product>(PRODUCTS_DATA);
+  dataSource = new MatTableDataSource<ProductSold>([]);
+  @ViewChild(MatPaginator) paginator?: MatPaginator;
+  @ViewChild('deleteDialog') deleteDialog?: TemplateRef<unknown>;
+
   constructor(
     @Optional() @Inject(MAT_DIALOG_DATA) public managerData: Manager
   ) {
     if (managerData) {
       this.displayedColumns = ['title', 'price', 'quantity', 'salesDate'];
-      this.dataSource = new MatTableDataSource<Product>(PRODUCTS_SOLD_BY_JDOE1);
+      this.store.dispatch(initProductsSold());
+      this.productsFacade
+        .getProductsSold()
+        .pipe(takeUntil(this.destroy$))
+        .subscribe(
+          (data) =>
+            (this.dataSource.data = data.filter(
+              (el) => el.username === managerData.username
+            ))
+        );
+    } else {
+      this.store.dispatch(initProducts());
+      this.productsFacade
+        .getProducts()
+        .pipe(takeUntil(this.destroy$))
+        .subscribe((data) => (this.dataSource.data = data));
     }
   }
-
-  @ViewChild(MatPaginator) paginator?: MatPaginator;
-  @ViewChild('deleteDialog') deleteDialog?: TemplateRef<unknown>;
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -90,6 +131,19 @@ export class ProductsComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     if (this.paginator) this.dataSource.paginator = this.paginator;
+    this.translate.onLangChange.subscribe((event) => {
+      this._matPaginatorIntl.itemsPerPageLabel =
+        this.translate.instant('Items per page');
+      this._matPaginatorIntl.nextPageLabel =
+        this.translate.instant('Next page');
+      this._matPaginatorIntl.previousPageLabel =
+        this.translate.instant('Previous page');
+      this._matPaginatorIntl.firstPageLabel =
+        this.translate.instant('First page');
+      this._matPaginatorIntl.lastPageLabel =
+        this.translate.instant('Last page');
+      this._matPaginatorIntl.changes.next();
+    });
   }
   openAddOrEditDialog(row?: Product) {
     const dialogRef = this.dialog.open(AddManageProductComponent, {
@@ -99,9 +153,18 @@ export class ProductsComponent implements OnInit, AfterViewInit {
     dialogRef
       .afterClosed()
       .pipe(take(1))
-      .subscribe((result: FormGroup<ProductForm>) => {
+      .subscribe((result: Product) => {
         if (result) {
-          console.log(result);
+          if (result.id) {
+            this.store.dispatch(updateProduct({ product: result }));
+          } else {
+            const body: Product = {
+              title: result.title,
+              quantity: result.quantity,
+              price: result.price,
+            };
+            this.store.dispatch(addProduct({ product: body }));
+          }
         }
       });
   }
@@ -112,7 +175,7 @@ export class ProductsComponent implements OnInit, AfterViewInit {
       .afterClosed()
       .pipe(take(1))
       .subscribe((result: boolean) => {
-        console.log(result);
+        if (result) this.store.dispatch(deleteProduct({ product: row }));
       });
   }
 
@@ -122,9 +185,48 @@ export class ProductsComponent implements OnInit, AfterViewInit {
     });
     dialogRef
       .afterClosed()
-      .pipe(take(1))
-      .subscribe((result: number) => {
-        console.log(result);
-      });
+      .pipe(
+        take(1),
+        filter((result: number) => !!result),
+        switchMap((result: number) => {
+          const product = structuredClone(row);
+          product.quantity = product.quantity - result;
+          this.store.dispatch(
+            sellProduct({
+              productSold: {
+                title: row.title,
+                price: row.price,
+                username: 'asmith2', //this needs to be replaced with current user
+                salesDate: new Date().toISOString(),
+                quantity: result,
+              },
+            })
+          );
+          this.store.dispatch(updateProduct({ product }));
+
+          return this.managersFacade.getManagers().pipe(
+            tap((managers) => {
+              const manager = structuredClone(
+                managers.find((el) => el.username === 'asmith2')
+              );
+              console.log(manager, managers);
+              if (manager) {
+                manager.totalSales = (
+                  result * Number(product.price) +
+                  Number(manager.totalSales)
+                ).toString();
+                this.store.dispatch(updateManager({ manager }));
+              }
+            }),
+            takeWhile((managers) => managers.length < 1)
+          );
+        })
+      )
+      .subscribe();
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next(null);
+    this.destroy$.complete();
   }
 }

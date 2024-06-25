@@ -20,7 +20,7 @@
       <button
         mat-button
         color="primary"
-        [mat-dialog-close]="form"
+        [mat-dialog-close]="form.value"
         [disabled]="form.invalid"
       >
         {{ "Confirm" | translate }}
