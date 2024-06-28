@@ -13,6 +13,7 @@ import { StateModule } from './store/state.module';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from './environment/environment';
+import { AngularFireModule } from '@angular/fire/compat';
 
 export function httpTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -40,7 +41,8 @@ bootstrapApplication(AppComponent, {
         logOnly: environment.production,
       }),
       MatNativeDateModule,
-      StateModule
+      StateModule,
+      AngularFireModule.initializeApp(environment.firebaseConfig)
     ),
   ],
 }).catch((err) => console.error(err));

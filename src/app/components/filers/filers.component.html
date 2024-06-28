@@ -1,5 +1,10 @@
 <form [formGroup]="form" class="p-8">
-  <p class="text-xl">{{ "Filter" | translate }}</p>
+  <div class="flex justify-between">
+    <p class="text-xl">{{ "Filter" | translate }}</p>
+    <button type="button" color="primary" mat-button (click)="clear()">
+      {{ "Clear" | translate }}
+    </button>
+  </div>
   <div class="flex flex-col gap-2">
     <mat-form-field appearance="outline" class="w-full">
       <mat-label>{{ "Username" | translate }}</mat-label>
@@ -39,15 +44,23 @@
     <mat-form-field appearance="outline" class="w-full">
       <mat-label>{{ "From" | translate }}</mat-label>
       <input matInput formControlName="totalSalesFrom" #input />
+      <mat-error *ngIf="form.controls.totalSalesFrom.hasError('min')">
+        {{ "min" | translate }} 0
+      </mat-error>
     </mat-form-field>
     <mat-form-field appearance="outline" class="w-full">
       <mat-label>{{ "To" | translate }}</mat-label>
       <input matInput formControlName="totalSalesTo" #input />
+      <mat-error *ngIf="form.controls.totalSalesTo.hasError('min')">
+        {{ "min" | translate }} 0
+      </mat-error>
     </mat-form-field>
   </div>
 
   <mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close>{{ "Cancel" | translate }}</button>
+    <button type="button" mat-button mat-dialog-close>
+      {{ "Cancel" | translate }}
+    </button>
     <button
       mat-button
       color="primary"

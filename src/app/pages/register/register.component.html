@@ -1,38 +1,79 @@
 <div class="size-full flex flex-col items-center justify-center gap-4">
   <p class="text-xl">{{ "Register" | translate }}</p>
-  <form (ngSubmit)="submit()" [formGroup]="form" class="flex flex-col">
+  <form (ngSubmit)="submit()" [formGroup]="form" class="flex flex-col gap-2">
     <mat-form-field appearance="outline">
       <mat-label>{{ "Username" | translate }}</mat-label>
       <input formControlName="username" matInput />
+      <mat-error
+        *ngIf="
+          form.controls.username.touched &&
+          form.controls.username.hasError('required')
+        "
+      >
+        {{ "required" | translate }}
+      </mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="outline">
       <mat-label>{{ "Name" | translate }}</mat-label>
       <input formControlName="name" matInput />
+      <mat-error
+        *ngIf="
+          form.controls.name.touched && form.controls.name.hasError('required')
+        "
+      >
+        {{ "required" | translate }}
+      </mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="outline">
       <mat-label>{{ "Surname" | translate }}</mat-label>
       <input formControlName="surname" matInput />
+      <mat-error
+        *ngIf="
+          form.controls.surname.touched &&
+          form.controls.surname.hasError('required')
+        "
+      >
+        {{ "required" | translate }}
+      </mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="outline">
       <mat-label>{{ "Password" | translate }}</mat-label>
-      <input formControlName="password" matInput />
+      <input type="password" formControlName="password" matInput />
+      <mat-error
+        *ngIf="
+          form.controls.password.touched &&
+          form.controls.password.hasError('required')
+        "
+      >
+        {{ "required" | translate }}
+      </mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="outline">
       <mat-label>{{ "Confirm Password" | translate }}</mat-label>
-      <input formControlName="confirmPassword" matInput />
+      <input type="password" formControlName="confirmPassword" matInput />
     </mat-form-field>
 
     <div class="flex flex-col gap-3">
       <button mat-raised-button color="primary" [disabled]="form.invalid">
         {{ "Register" | translate }}
       </button>
-      <button type="button" mat-raised-button routerLink="./log-in">
+      <button type="button" mat-raised-button routerLink="./login">
         {{ "Log in" | translate }}
       </button>
     </div>
+    <mat-error
+      class="my-2"
+      *ngIf="
+        form.controls.password.touched &&
+        form.controls.confirmPassword.touched &&
+        form.hasError('passwordsMismatch')
+      "
+    >
+      {{ "Passwords doesn't match" | translate }}
+    </mat-error>
   </form>
 </div>

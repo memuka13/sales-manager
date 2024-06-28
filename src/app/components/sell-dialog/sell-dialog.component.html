@@ -10,6 +10,15 @@
       [max]="maxQuantity"
     />
   </mat-form-field>
+  <mat-error *ngIf="quantity.touched && quantity.hasError('required')">
+    {{ "required" | translate }}
+  </mat-error>
+  <mat-error *ngIf="quantity.hasError('min')">
+    {{ "min" | translate }} {{ minQuantity }}
+  </mat-error>
+  <mat-error *ngIf="quantity.hasError('max')">
+    {{ "max" | translate }} {{ maxQuantity }}
+  </mat-error>
   <mat-dialog-actions align="end">
     <button mat-button [mat-dialog-close]="undefined">
       {{ "Cancel" | translate }}

@@ -28,4 +28,15 @@ import { MatButtonModule } from '@angular/material/button';
 export class FilersComponent {
   readonly maxDate = new Date();
   readonly form: FormGroup<ManagerFiltersForm> = inject(MAT_DIALOG_DATA);
+
+  clear() {
+    this.form.reset({
+      username: '',
+      name: '',
+      surname: '',
+      totalSalesFrom: '',
+      totalSalesTo: '',
+      dateRegisteredRange: { start: '', end: '' },
+    });
+  }
 }

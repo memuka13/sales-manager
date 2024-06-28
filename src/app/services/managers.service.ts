@@ -20,4 +20,8 @@ export class ManagersService {
       manager
     );
   }
+
+  addManager(manager: Manager): Observable<Manager> {
+    return this.http.post<Manager>(`${environment.baseUrl}/managers`, manager);
+  }
 }

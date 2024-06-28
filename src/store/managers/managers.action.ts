@@ -31,3 +31,20 @@ export const updateManagerApiActions = createActionGroup({
     }>(),
   },
 });
+
+export const addManager = createAction(
+  '[Add] Manager',
+  props<{ manager: Manager }>()
+);
+
+export const addManagerApiActions = createActionGroup({
+  source: 'Manager/Api',
+  events: {
+    'Add Managers Success': props<{
+      manager: Manager;
+    }>(),
+    'Add Managers Failure': props<{
+      error: string;
+    }>(),
+  },
+});

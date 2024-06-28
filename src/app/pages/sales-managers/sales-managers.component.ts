@@ -75,6 +75,7 @@ export class SalesManagersComponent
   });
 
   filter(form: FormGroup<ManagerFiltersForm>) {
+    console.log(form, form.value);
     const username = form.value.username?.toLowerCase();
     const name = form.value.name?.toLowerCase();
     const surname = form.value.surname?.toLowerCase();
@@ -135,16 +136,9 @@ export class SalesManagersComponent
   }
 
   openDialog(row: Manager) {
-    const dialogRef = this.dialog.open(ProductsComponent, {
+    this.dialog.open(ProductsComponent, {
       data: row,
     });
-
-    dialogRef
-      .afterClosed()
-      .pipe(take(1))
-      .subscribe((result) => {
-        console.log('The dialog was closed', result);
-      });
   }
 
   openFilter() {

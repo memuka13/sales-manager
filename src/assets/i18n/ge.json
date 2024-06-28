@@ -2,12 +2,13 @@
   "Name": "სახელი",
   "Surname": "გვარი",
   "Log in": "შესვლა",
+  "Log out": "გამოსვლა",
   "Username": "მომხმარებლის სახელი",
   "Password": "პაროლი",
   "Confirm Password": "გაიმეორე პაროლი",
   "Language": "ენა",
   "Products": "პროდუქტები",
-  "Sales Manager": "გაყიდვების მენეჯერები",
+  "Sales Managers": "გაყიდვების მენეჯერები",
   "Home": "მთავარი",
   "Title": "დასახელება",
   "Price": "ფასი",
@@ -28,5 +29,9 @@
   "Next page": "მომდევნო გვერდი",
   "Previous page": "წინა გვერდი",
   "First page": "პირველი გვერდი",
-  "Last page": "ბოლო გვერდი"
+  "Last page": "ბოლო გვერდი",
+  "Title must contain only Latin or Georgian characters and numbers": "სათაურში უნდა იყოს მხოლოდ ლათინური ან ქართული სიმბოლოები და ციფრები",
+  "required": "სავალდებულო ველი",
+  "Passwords doesn't match": "პაროლები არ ემთხვევა",
+  "clear": "გასუფტავება"
 }
