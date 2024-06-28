@@ -25,8 +25,9 @@ import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 export class SellDialogComponent {
   readonly minQuantity = 0;
   readonly maxQuantity: number = inject(MAT_DIALOG_DATA);
-  quantity: FormControl<number | null> = new FormControl(
-    null,
-    Validators.required
-  );
+  quantity: FormControl<number | null> = new FormControl(null, [
+    Validators.required,
+    Validators.min(this.minQuantity),
+    Validators.max(this.maxQuantity),
+  ]);
 }

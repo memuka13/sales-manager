@@ -1,7 +1,41 @@
-<header class="h-12">
+<header class="h-12 flex justify-between">
   <button mat-icon-button (click)="drawer.toggle()">
     <mat-icon fontIcon="menu"></mat-icon>
   </button>
+  <div class="mx-2 flex justify-between gap-4 items-center">
+    <button
+      mat-raised-button
+      *ngIf="currentUser$ | async; else loginTemplate"
+      color="primary"
+      class="w-full text-nowrap"
+      (click)="logout()"
+    >
+      {{ "Log out" | translate }}
+    </button>
+    <ng-template #loginTemplate>
+      <button
+        mat-raised-button
+        color="primary"
+        class="w-full text-nowrap"
+        routerLink="./login"
+      >
+        {{ "Log in" | translate }}
+      </button>
+    </ng-template>
+    <select
+      class="w-full mat-mdc-raised-button mat-mdc-unelevated-button mat-mdc-raised-button-base mdc-button text-center"
+      #selectedLang
+      (change)="switchLang(selectedLang.value)"
+    >
+      <option
+        *ngFor="let language of translate.getLangs()"
+        [value]="language"
+        [selected]="language === translate.currentLang"
+      >
+        {{ language }}
+      </option>
+    </select>
+  </div>
 </header>
 <mat-drawer-container hasBackdrop="false">
   <mat-drawer class="rounded-e-md" #drawer mode="side" position="start">

@@ -40,3 +40,14 @@ export interface Manager {
   dateRegistered: string;
   totalSales: string;
 }
+
+export interface CurrentUser {
+  username: string;
+  name: string;
+  surname: string;
+  dateRegistered: string;
+}
+
+export interface FirebaseUser {
+  displayName: CurrentUser;
+}

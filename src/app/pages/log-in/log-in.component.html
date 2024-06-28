@@ -4,10 +4,26 @@
     <mat-form-field appearance="outline">
       <mat-label>{{ "Username" | translate }}</mat-label>
       <input formControlName="username" matInput />
+      <mat-error
+        *ngIf="
+          form.controls.username.touched &&
+          form.controls.username.hasError('required')
+        "
+      >
+        {{ "required" | translate }}
+      </mat-error>
     </mat-form-field>
     <mat-form-field appearance="outline">
       <mat-label>{{ "Password" | translate }}</mat-label>
-      <input formControlName="password" matInput />
+      <input type="password" formControlName="password" matInput />
+      <mat-error
+        *ngIf="
+          form.controls.password.touched &&
+          form.controls.password.hasError('required')
+        "
+      >
+        {{ "required" | translate }}
+      </mat-error>
     </mat-form-field>
     <div class="flex flex-col gap-3">
       <button

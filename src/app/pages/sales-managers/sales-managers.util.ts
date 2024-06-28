@@ -66,7 +66,6 @@ const isDateInRange = (
   const startDate = startDateString !== '' ? parseISO(startDateString) : null;
   const endDate =
     endDateString !== '' ? addDays(parseISO(endDateString), 1) : null;
-  console.log(date, startDate);
 
   return startDate && endDate
     ? isWithinInterval(date, { start: startDate, end: endDate }) ||

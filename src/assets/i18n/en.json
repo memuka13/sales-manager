@@ -2,12 +2,13 @@
   "Name": "Name",
   "Surname": "Surname",
   "Log in": "Log in",
+  "Log out": "Log out",
   "Username": "Username",
   "Password": "Password",
   "Confirm Password": "Confirm Password",
   "Language": "Language",
   "Products": "Products",
-  "Sales Manager": "Sales Manager",
+  "Sales Managers": "Sales Managers",
   "Home": "Home",
   "Title": "Title",
   "Price": "Price",
@@ -28,5 +29,9 @@
   "Next page": "Next page",
   "Previous page": "Previous page",
   "First page": "First page",
-  "Last page": "Last page"
+  "Last page": "Last page",
+  "Title must contain only Latin or Georgian characters and numbers": "Title must contain only Latin or Georgian characters and numbers",
+  "required": "required",
+  "Passwords doesn't match": "Passwords doesn't match",
+  "clear": "clear"
 }

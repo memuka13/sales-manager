@@ -10,7 +10,7 @@ export const passwordMatchValidator = (): ValidatorFn => {
       confirmPassword &&
       password.value !== confirmPassword.value
     ) {
-      return { passwordMismatch: true };
+      return { passwordsMismatch: true };
     }
     return null;
   };

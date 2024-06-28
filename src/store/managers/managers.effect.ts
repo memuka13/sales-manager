@@ -1,6 +1,8 @@
 import { Injectable, inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import {
+  addManager,
+  addManagerApiActions,
   initManagers,
   initManagersApiActions,
   updateManager,
@@ -15,6 +17,7 @@ import { ManagersService } from 'src/app/services/managers.service';
 export class ManagersPageEffect {
   private readonly actions$ = inject(Actions);
   private readonly managersService = inject(ManagersService);
+
   loadManagers$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(initManagers),
@@ -43,6 +46,22 @@ export class ManagersPageEffect {
       catchError((error: string) => {
         console.log('error', error);
         return of(updateManagerApiActions.updateManagersFailure({ error }));
+      })
+    );
+  });
+
+  addManager$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(addManager),
+      switchMap((action) => this.managersService.addManager(action.manager)),
+      map((manager) =>
+        addManagerApiActions.addManagersSuccess({
+          manager,
+        })
+      ),
+      catchError((error: string) => {
+        console.log('error', error);
+        return of(addManagerApiActions.addManagersFailure({ error }));
       })
     );
   });

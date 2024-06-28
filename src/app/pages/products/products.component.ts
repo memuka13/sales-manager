@@ -33,6 +33,7 @@ import {
   takeUntil,
   takeWhile,
   tap,
+  withLatestFrom,
 } from 'rxjs';
 import { MatIconModule } from '@angular/material/icon';
 import { SellDialogComponent } from 'src/app/components/sell-dialog/sell-dialog.component';
@@ -49,6 +50,7 @@ import { ProductsFacade } from 'src/store/products/products.facade';
 import { selectManagers } from 'src/store/managers/managers.selector';
 import { updateManager } from 'src/store/managers/managers.action';
 import { ManagersFacade } from 'src/store/managers/managers.facade';
+import { AuthStateFacade } from 'src/store/auth/auth.facade';
 
 @Component({
   selector: 'app-products',
@@ -75,6 +77,8 @@ export class ProductsComponent implements OnInit, AfterViewInit, OnDestroy {
   private readonly managersFacade = inject(ManagersFacade);
   private _matPaginatorIntl = inject(MatPaginatorIntl);
   public translate = inject(TranslateService);
+  private readonly authStateFacade = inject(AuthStateFacade);
+  readonly currentUser$ = this.authStateFacade.getCurrentUser();
   destroy$ = new Subject<null>();
   readonly displayedColumns: string[] = [
     'title',
@@ -146,6 +150,7 @@ export class ProductsComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
   openAddOrEditDialog(row?: Product) {
+    if (this.managerData) return;
     const dialogRef = this.dialog.open(AddManageProductComponent, {
       data: row,
     });
@@ -188,7 +193,9 @@ export class ProductsComponent implements OnInit, AfterViewInit, OnDestroy {
       .pipe(
         take(1),
         filter((result: number) => !!result),
-        switchMap((result: number) => {
+        withLatestFrom(this.currentUser$),
+        switchMap(([result, currentUser]) => {
+          console.log(currentUser);
           const product = structuredClone(row);
           product.quantity = product.quantity - result;
           this.store.dispatch(
@@ -196,7 +203,7 @@ export class ProductsComponent implements OnInit, AfterViewInit, OnDestroy {
               productSold: {
                 title: row.title,
                 price: row.price,
-                username: 'asmith2', //this needs to be replaced with current user
+                username: currentUser?.username, //this needs to be replaced with current user
                 salesDate: new Date().toISOString(),
                 quantity: result,
               },
@@ -207,9 +214,8 @@ export class ProductsComponent implements OnInit, AfterViewInit, OnDestroy {
           return this.managersFacade.getManagers().pipe(
             tap((managers) => {
               const manager = structuredClone(
-                managers.find((el) => el.username === 'asmith2')
+                managers.find((el) => el.username === currentUser?.username)
               );
-              console.log(manager, managers);
               if (manager) {
                 manager.totalSales = (
                   result * Number(product.price) +

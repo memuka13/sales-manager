@@ -1,6 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
 import { Manager } from 'src/app/models';
 import {
+  addManagerApiActions,
   initManagersApiActions,
   updateManagerApiActions,
 } from './managers.action';
@@ -18,6 +19,7 @@ export const managersPageReducer = createReducer(
   on(
     initManagersApiActions.loadManagersFailure,
     updateManagerApiActions.updateManagersFailure,
+    addManagerApiActions.addManagersFailure,
     (state, action): ManagersPageState => {
       return {
         ...state,
@@ -42,6 +44,15 @@ export const managersPageReducer = createReducer(
       return {
         ...state,
         managers: newManagersState,
+      };
+    }
+  ),
+  on(
+    addManagerApiActions.addManagersSuccess,
+    (state, action): ManagersPageState => {
+      return {
+        ...state,
+        managers: [...state.managers, action.manager],
       };
     }
   )

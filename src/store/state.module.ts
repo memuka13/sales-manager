@@ -15,6 +15,9 @@ import { ManagersPageEffect } from './managers/managers.effect';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ProductsFacade } from './products/products.facade';
 import { ManagersFacade } from './managers/managers.facade';
+import { AuthStateFacade } from './auth/auth.facade';
+import { AuthEffect } from './auth/auth.effect';
+import { AUTH_FEATURE_KEY, authReducer } from './auth/auth.reducer';
 
 @NgModule({
   declarations: [],
@@ -22,9 +25,14 @@ import { ManagersFacade } from './managers/managers.facade';
     CommonModule,
     StoreModule.forFeature(PRODUCTS_FEATURE_KEY, productsPageReducer),
     StoreModule.forFeature(MANAGERS_FEATURE_KEY, managersPageReducer),
-    EffectsModule.forFeature([ProductsPageEffect, ManagersPageEffect]),
+    StoreModule.forFeature(AUTH_FEATURE_KEY, authReducer),
+    EffectsModule.forFeature([
+      ProductsPageEffect,
+      ManagersPageEffect,
+      AuthEffect,
+    ]),
     MatSnackBarModule,
   ],
-  providers: [ProductsFacade, ManagersFacade],
+  providers: [ProductsFacade, ManagersFacade, AuthStateFacade],
 })
 export class StateModule {}

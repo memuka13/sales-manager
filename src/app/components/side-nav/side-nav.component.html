@@ -1,24 +1,18 @@
 <nav class="p-4 h-full w-fit min-w-28 flex flex-col items-start gap-2">
-  <select
+  <button
+    mat-raised-button
     class="w-full"
-    #selectedLang
-    (change)="switchLang(selectedLang.value)"
+    routerLink="./products"
+    routerLinkActive="mat-accent"
   >
-    <option
-      *ngFor="let language of translate.getLangs()"
-      [value]="language"
-      [selected]="language === translate.currentLang"
-    >
-      {{ language }}
-    </option>
-  </select>
-  <button mat-raised-button class="w-full" routerLink="./log-in">
-    {{ "Home" | translate }}
-  </button>
-  <button mat-raised-button class="w-full" routerLink="./products">
     {{ "Products" | translate }}
   </button>
-  <button mat-raised-button class="w-full" routerLink="./sales-managers">
-    {{ "Sales Manager" | translate }}
+  <button
+    mat-raised-button
+    class="w-full"
+    routerLink="./sales-managers"
+    routerLinkActive="mat-accent"
+  >
+    {{ "Sales Managers" | translate }}
   </button>
 </nav>

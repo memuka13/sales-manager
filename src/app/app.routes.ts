@@ -1,15 +1,18 @@
 import { Route } from '@angular/router';
+import { AnonymGuard } from './guard/anonym.guard';
+import { AuthGuard } from './guard/auth.guard';
 
 export const appRoutes: Route[] = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'log-in',
+    redirectTo: 'login',
   },
   {
-    path: 'log-in',
+    path: 'login',
     loadComponent: () =>
       import('./pages/log-in/log-in.component').then((m) => m.LogInComponent),
+    canActivate: [AnonymGuard],
   },
   {
     path: 'register',
@@ -17,6 +20,7 @@ export const appRoutes: Route[] = [
       import('./pages/register/register.component').then(
         (m) => m.RegisterComponent
       ),
+    canActivate: [AnonymGuard],
   },
   {
     path: 'products',
@@ -24,6 +28,7 @@ export const appRoutes: Route[] = [
       import('./pages/products/products.component').then(
         (m) => m.ProductsComponent
       ),
+    canActivate: [AuthGuard],
   },
   {
     path: 'sales-managers',
@@ -31,9 +36,10 @@ export const appRoutes: Route[] = [
       import('./pages/sales-managers/sales-managers.component').then(
         (m) => m.SalesManagersComponent
       ),
+    canActivate: [AuthGuard],
   },
   {
     path: '**',
-    redirectTo: 'log-in',
+    redirectTo: 'login',
   },
 ];
