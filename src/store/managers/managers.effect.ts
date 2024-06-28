@@ -10,6 +10,7 @@ import {
 } from './managers.action';
 import { catchError, map, of, switchMap } from 'rxjs';
 import { ManagersService } from 'src/app/services/managers.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
   providedIn: 'root',
@@ -17,6 +18,7 @@ import { ManagersService } from 'src/app/services/managers.service';
 export class ManagersPageEffect {
   private readonly actions$ = inject(Actions);
   private readonly managersService = inject(ManagersService);
+  private readonly snackbar = inject(MatSnackBar);
 
   loadManagers$ = createEffect(() => {
     return this.actions$.pipe(
@@ -38,11 +40,12 @@ export class ManagersPageEffect {
     return this.actions$.pipe(
       ofType(updateManager),
       switchMap((action) => this.managersService.updateManager(action.manager)),
-      map((manager) =>
-        updateManagerApiActions.updateManagersSuccess({
+      map((manager) => {
+        this.snackbar.open('success', 'dismiss');
+        return updateManagerApiActions.updateManagersSuccess({
           manager,
-        })
-      ),
+        });
+      }),
       catchError((error: string) => {
         console.log('error', error);
         return of(updateManagerApiActions.updateManagersFailure({ error }));
@@ -54,11 +57,12 @@ export class ManagersPageEffect {
     return this.actions$.pipe(
       ofType(addManager),
       switchMap((action) => this.managersService.addManager(action.manager)),
-      map((manager) =>
-        addManagerApiActions.addManagersSuccess({
+      map((manager) => {
+        this.snackbar.open('success', 'dismiss');
+        return addManagerApiActions.addManagersSuccess({
           manager,
-        })
-      ),
+        });
+      }),
       catchError((error: string) => {
         console.log('error', error);
         return of(addManagerApiActions.addManagersFailure({ error }));

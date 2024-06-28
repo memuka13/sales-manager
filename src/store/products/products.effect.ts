@@ -16,6 +16,7 @@ import {
 } from './products.action';
 import { catchError, map, of, switchMap } from 'rxjs';
 import { ProductsService } from 'src/app/services/products.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
   providedIn: 'root',
@@ -23,6 +24,7 @@ import { ProductsService } from 'src/app/services/products.service';
 export class ProductsPageEffect {
   private readonly actions$ = inject(Actions);
   private readonly productsService = inject(ProductsService);
+  private readonly snackbar = inject(MatSnackBar);
 
   loadProducts$ = createEffect(() => {
     return this.actions$.pipe(
@@ -44,7 +46,10 @@ export class ProductsPageEffect {
     return this.actions$.pipe(
       ofType(addProduct),
       switchMap((action) => this.productsService.addProduct(action.product)),
-      map((product) => addProductApiActions.addProductSuccess({ product })),
+      map((product) => {
+        this.snackbar.open('success', 'dismiss');
+        return addProductApiActions.addProductSuccess({ product });
+      }),
       catchError((error: string) => {
         console.log('error', error);
         return of(addProductApiActions.addProductFailure({ error }));
@@ -56,9 +61,10 @@ export class ProductsPageEffect {
     return this.actions$.pipe(
       ofType(updateProduct),
       switchMap((action) => this.productsService.updateProduct(action.product)),
-      map((product) =>
-        updateProductApiActions.updateProductSuccess({ product })
-      ),
+      map((product) => {
+        this.snackbar.open('success', 'dismiss');
+        return updateProductApiActions.updateProductSuccess({ product });
+      }),
       catchError((error: string) => {
         console.log('error', error);
         return of(updateProductApiActions.updateProductFailure({ error }));
@@ -70,9 +76,10 @@ export class ProductsPageEffect {
     return this.actions$.pipe(
       ofType(deleteProduct),
       switchMap((action) => this.productsService.deleteProduct(action.product)),
-      map((product) =>
-        deleteProductApiActions.deleteProductSuccess({ product })
-      ),
+      map((product) => {
+        this.snackbar.open('success', 'dismiss');
+        return deleteProductApiActions.deleteProductSuccess({ product });
+      }),
       catchError((error: string) => {
         console.log('error', error);
         return of(deleteProductApiActions.deleteProductFailure({ error }));
@@ -104,9 +111,10 @@ export class ProductsPageEffect {
       switchMap((action) =>
         this.productsService.sellProduct(action.productSold)
       ),
-      map((productSold) =>
-        sellProductApiActions.sellProductSuccess({ productSold })
-      ),
+      map((productSold) => {
+        this.snackbar.open('success', 'dismiss');
+        return sellProductApiActions.sellProductSuccess({ productSold });
+      }),
       catchError((error: string) => {
         console.log('error', error);
         return of(sellProductApiActions.sellProductFailure({ error }));

@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { addManager } from '../managers/managers.action';
 import { CurrentUser, FirebaseUser } from 'src/app/models';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
   providedIn: 'root',
@@ -16,6 +17,7 @@ export class AuthEffect {
   private readonly actions$ = inject(Actions);
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
+  private readonly snackbar = inject(MatSnackBar);
 
   loadUserState$ = createEffect(() => {
     return this.actions$.pipe(
@@ -42,6 +44,7 @@ export class AuthEffect {
         ).pipe(filter((user) => !!user))
       ),
       map((action) => {
+        this.snackbar.open('success', 'dismiss');
         console.log(action);
         this.router.navigate(['./login']);
         this.store.dispatch(authActions.getUserState());
@@ -75,6 +78,7 @@ export class AuthEffect {
       ),
       filter((action) => !!action),
       map(() => {
+        this.snackbar.open('success', 'dismiss');
         this.router.navigate(['./products']);
         return authApiActions.loginUserSuccess();
       }),
@@ -92,6 +96,7 @@ export class AuthEffect {
       switchMap(() => this.authService.logout()),
       filter((boolean) => !!boolean),
       map(() => {
+        this.snackbar.open('success', 'dismiss');
         this.router.navigate(['./login']);
         return authApiActions.logoutUserSuccess();
       }),
