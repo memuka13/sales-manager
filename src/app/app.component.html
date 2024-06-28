@@ -7,9 +7,12 @@
     position="start"
     [opened]="!!currentUser"
   >
-    <app-side-nav>
+    <app-side-nav> </app-side-nav>
+  </mat-drawer>
+  <mat-drawer-content class="p-3">
+    <div class="p-4 flex justify-end">
       <select
-        class="w-full mat-mdc-raised-button mat-mdc-unelevated-button mat-mdc-raised-button-base mdc-button text-center"
+        class="mat-mdc-raised-button mat-mdc-unelevated-button mat-mdc-raised-button-base mdc-button text-center"
         #selectedLang
         (change)="switchLang(selectedLang.value)"
       >
@@ -22,9 +25,7 @@
           {{ language }}
         </option>
       </select>
-    </app-side-nav>
-  </mat-drawer>
-  <mat-drawer-content class="p-3">
+    </div>
     <router-outlet></router-outlet>
   </mat-drawer-content>
 </mat-drawer-container>
