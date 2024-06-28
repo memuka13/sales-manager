@@ -11,8 +11,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { AuthStateFacade } from 'src/store/auth/auth.facade';
-import { Store } from '@ngrx/store';
-import { authActions } from 'src/store/auth/auth.action';
 
 @Component({
   selector: 'app-root',
@@ -35,7 +33,6 @@ import { authActions } from 'src/store/auth/auth.action';
 })
 export class AppComponent {
   title = 'sales-manager';
-  private readonly store = inject(Store);
   private readonly authStateFacade = inject(AuthStateFacade);
   readonly currentUser$ = this.authStateFacade.getCurrentUser();
 
@@ -46,9 +43,5 @@ export class AppComponent {
   }
   switchLang(lang: string) {
     this.translate.use(lang);
-  }
-
-  logout() {
-    this.store.dispatch(authActions.logoutUser());
   }
 }

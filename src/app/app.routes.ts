@@ -23,20 +23,28 @@ export const appRoutes: Route[] = [
     canActivate: [AnonymGuard],
   },
   {
-    path: 'products',
+    path: '',
     loadComponent: () =>
-      import('./pages/products/products.component').then(
-        (m) => m.ProductsComponent
-      ),
+      import('./pages/home/home.component').then((m) => m.HomeComponent),
     canActivate: [AuthGuard],
-  },
-  {
-    path: 'sales-managers',
-    loadComponent: () =>
-      import('./pages/sales-managers/sales-managers.component').then(
-        (m) => m.SalesManagersComponent
-      ),
-    canActivate: [AuthGuard],
+    children: [
+      {
+        path: 'products',
+        loadComponent: () =>
+          import('./pages/products/products.component').then(
+            (m) => m.ProductsComponent
+          ),
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'sales-managers',
+        loadComponent: () =>
+          import('./pages/sales-managers/sales-managers.component').then(
+            (m) => m.SalesManagersComponent
+          ),
+        canActivate: [AuthGuard],
+      },
+    ],
   },
   {
     path: '**',
